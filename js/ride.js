@@ -22,13 +22,6 @@ WildRydes.map = WildRydes.map || {};
             headers: {
                 Authorization: authToken
             },
-            requestContext: {
-                authorizer: {
-                  claims: {
-                    "cognito:username": "the_username"
-                  }
-                }
-              },
             data: JSON.stringify({
                 PickupLocation: {
                     Latitude: pickupLocation.latitude,
