@@ -1,13 +1,13 @@
-/*global WildRydes _config*/
+/*global GrowerSystem _config*/
 
-var WildRydes = window.WildRydes || {};
-WildRydes.map = WildRydes.map || {};
+var GrowerSystem = window.GrowerSystem || {};
+GrowerSystem.map = GrowerSystem.map || {};
 
 
 
 (function dashScopeWrapper($) {
     var authToken;
-    WildRydes.authToken.then(function setAuthToken(token) {
+    GrowerSystem.authToken.then(function setAuthToken(token) {
         if (token) {
             authToken = token;
         } else {
@@ -22,9 +22,11 @@ WildRydes.map = WildRydes.map || {};
 	// Register click handler for #request button
 	$(function onDocReady() {
 		//$('#request').click(handleRequestClick);
-		//$(WildRydes.map).on('pickupChange', handlePickupChanged);
+		//$(GrowerSystem.map).on('pickupChange', handlePickupChanged);
 
-		WildRydes.authToken.then(function updateAuthMessage(token) {
+		var logInButtonText = "Signasas in";
+
+		GrowerSystem.authToken.then(function updateAuthMessage(token) {
 			if (token) {
 				//displayUpdate('You are authenticated. Click to see your <a href="#authTokenModal" data-toggle="modal">auth token</a>.');
 				$('.authToken').text(token);
@@ -38,14 +40,26 @@ WildRydes.map = WildRydes.map || {};
 					}
 					
 				});
-				getData();
 				
+				
+				getData();
+			
+
+			}else{
+				logInButtonText = "Sign Out";
 			}
+		});
+		
+		$("#sign-out").click(function (){
+			GrowerSystem.signOut();
+			window.location.href = './signin.html';
 		});
 
 		if (!_config.api.invokeUrl) {
 			$('#noApiMessage').show();
 		}
+
+		
 	});
 
 
@@ -61,42 +75,37 @@ WildRydes.map = WildRydes.map || {};
 
 	
 
-	function addData(chart, label, data) {
+	function addData(chart, label, cantData, data) {
 		chart.data.labels.push(label);
-		chart.data.datasets[0].data.push(data[0]);
-		chart.data.datasets[1].data.push(data[1]);
-		chart.update();
-	}
-
-	function removeData(chart) {
-		chart.data.labels.pop();
-		chart.data.datasets.forEach((dataset) => {
-			dataset.data.pop();
-		});
+		for(var i = 0; i < cantData; i++){
+			chart.data.datasets[i].data.push(data[i]);
+		}
 		chart.update();
 	}
 
 	function getData() {
 
-		// Graphs
-		var ctx = document.getElementById('myChart')
-		// eslint-disable-next-line no-unused-vars
+		var ctx1 = document.getElementById('myChart1')
+		var ctx2 = document.getElementById('myChart2')
+		var ctx3 = document.getElementById('myChart3')
+		var ctx4 = document.getElementById('myChart4')
+		
 
-		var myChart = new Chart(ctx, {
+		var myChart1 = new Chart(ctx1, {
 			type: 'line',
 			data: {
 				labels: [],
 				datasets: [{
-					label: 'My First dataset',
-					borderColor: window.chartColors.red,
-					backgroundColor: window.chartColors.red,
+					label: 'Ground Moisure',
+					borderColor: window.chartColors.green,
+					backgroundColor: window.chartColors.green,
 					fill: false,
 					data: [],
 					yAxisID: 'y-axis-1',
 				}, {
-					label: 'My Second dataset',
-					borderColor: window.chartColors.blue,
-					backgroundColor: window.chartColors.blue,
+					label: 'Air Moisure',
+					borderColor: window.chartColors.red,
+					backgroundColor: window.chartColors.red,
 					fill: false,
 					data: [],
 					yAxisID: 'y-axis-1'
@@ -112,7 +121,95 @@ WildRydes.map = WildRydes.map || {};
 					}],
 				},
 				legend: {
-				display: false
+					display: true,
+					position: 'top'
+				}
+			}
+		});
+
+		var myChart2 = new Chart(ctx2, {
+			type: 'line',
+			data: {
+				labels: [],
+				datasets: [{
+					label: 'Air Temperature',
+					borderColor: window.chartColors.grey,
+					backgroundColor: window.chartColors.grey,
+					fill: false,
+					data: [],
+					yAxisID: 'y-axis-1',
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+						display: true,
+						position: 'left',
+						id: 'y-axis-1',
+					}],
+				},
+				legend: {
+					display: true,
+					position: 'top'
+				}
+			}
+		});
+
+		var myChart3 = new Chart(ctx3, {
+			type: 'bar',
+			data: {
+				labels: [],
+				datasets: [{
+					label: 'Water',
+					borderColor: window.chartColors.blue,
+					backgroundColor: window.chartColors.blue,
+					fill: false,
+					data: [],
+					yAxisID: 'y-axis-1',
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+						display: true,
+						position: 'left',
+						id: 'y-axis-1',
+					}],
+				},
+				legend: {
+					display: true,
+					position: 'top'
+				}
+			}
+		});
+
+		var myChart4 = new Chart(ctx4, {
+			type: 'bar',
+			data: {
+				labels: [],
+				datasets: [{
+					label: 'Future Use',
+					borderColor: window.chartColors.blue,
+					backgroundColor: window.chartColors.blue,
+					fill: false,
+					data: [],
+					yAxisID: 'y-axis-1',
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+						display: true,
+						position: 'left',
+						id: 'y-axis-1',
+					}],
+				},
+				legend: {
+					display: true,
+					position: 'top'
 				}
 			}
 		});
@@ -146,11 +243,15 @@ WildRydes.map = WildRydes.map || {};
 		  } else {
 			data.Items.forEach(function(measure) {
 				
-				var time = measure.Time['S'];
+				var time = formatTime(measure.TimeEpoch['N']);
 				var value1 = measure.ground_moisure['N'];
 				var value2 = measure.air_moisure['N'];
+				var value3 = measure.air_temperature['N'];
 				var values = [value1,value2];
-				addData(myChart, time, values);
+				var values2 = [value3];
+				addData(myChart1, time, 2, values);
+				addData(myChart2, time, 1, values2);
+				addData(myChart3, 15, 1, [5]);
 			})
 		  }
 		});
@@ -161,13 +262,12 @@ WildRydes.map = WildRydes.map || {};
 		
 	}
 
+	function formatTime( time){
+		//in=   15/Jun/2020:22:26:09 +0000
+		//out=  
+		var date = new Date(time*1);
+		return date.getHours() + ':' + date.getMinutes();
+	}
 	
-	
-	// $(function() {
-	// 	getData();
-	// 	$.ajaxSetup({ cache: false });
-	// 	setInterval(getData, 3000);
-	//   });
-
 }(jQuery));
 

@@ -1,6 +1,6 @@
-/*global WildRydes _config AmazonCognitoIdentity AWSCognito*/
+/*global GrowerSystem _config AmazonCognitoIdentity AWSCognito*/
 
-var WildRydes = window.WildRydes || {};
+var GrowerSystem = window.GrowerSystem || {};
 
 (function scopeWrapper($) {
     var signinUrl = './signin.html';
@@ -25,11 +25,11 @@ var WildRydes = window.WildRydes || {};
         AWSCognito.config.region = _config.cognito.region;
     }
 
-    WildRydes.signOut = function signOut() {
+    GrowerSystem.signOut = function signOut() {
         userPool.getCurrentUser().signOut();
     };
 
-    WildRydes.session = new Promise(function fetchCurrentSession(resolve, reject) {
+    GrowerSystem.session = new Promise(function fetchCurrentSession(resolve, reject) {
         var cognitoUser = userPool.getCurrentUser();
 
         if (cognitoUser) {
@@ -47,7 +47,7 @@ var WildRydes = window.WildRydes || {};
         }
     });
 
-    WildRydes.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
+    GrowerSystem.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
         var cognitoUser = userPool.getCurrentUser();
 
         if (cognitoUser) {
@@ -129,7 +129,32 @@ var WildRydes = window.WildRydes || {};
         $('#signinForm').submit(handleSignin);
         $('#registrationForm').submit(handleRegister);
         $('#verifyForm').submit(handleVerify);
+        configureLogInForm();
     });
+
+    function configureLogInForm(){
+        var cognitoUser = userPool.getCurrentUser();
+        var textToSet = "You are not logged in. Please do it!";
+        $('#emailField').show();
+        $('#passField').show();
+        $('#rememberCheckBox').show();
+        $('#signButton').show();
+        //$('#sign-in-out').text("");
+        if (cognitoUser) {
+            cognitoUser.getSession(function sessionCallback(err, session) {
+                if (!err && session.isValid()) {
+                    textToSet = "Good. You are logged in!";
+                    $('#emailField').hide();
+                    $('#passField').hide();
+                    $('#rememberCheckBox').hide();
+                    $('#signButton').hide();
+                }
+            });
+        }
+        $('#dynamicText').append(textToSet);
+
+        
+    }
 
     function handleSignin(event) {
         var email = $('#emailInputSignin').val();
