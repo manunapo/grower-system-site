@@ -27,7 +27,6 @@ GrowerSystem.map = GrowerSystem.map || {};
 		//$('#request').click(handleRequestClick);
 		//$(GrowerSystem.map).on('pickupChange', handlePickupChanged);
 
-		var logInButtonText = "Signasas in";
 
 		GrowerSystem.authToken.then(function updateAuthMessage(token) {
 			if (token) {
@@ -56,6 +55,21 @@ GrowerSystem.map = GrowerSystem.map || {};
 		$("#sign-out").click(function () {
 			GrowerSystem.signOut();
 			window.location.href = './signin.html';
+		});
+
+		$("#lightButtton").click(function () {
+			let action = '{"light":"on"}';
+			sendAction(action);
+		});
+
+		$("#fanButtton").click(function () {
+			let action = '{"fan":"on"}';
+			sendAction(action);
+		});
+
+		$("#bombButtton").click(function () {
+			let action = '{"bomb":"on"}';
+			sendAction(action);
 		});
 
 		$("#btn24").click(function () {
@@ -99,14 +113,12 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 
 
-	
+
 
 	function drawCharts() {
 
 		var ctx1 = document.getElementById('myChart1')
 		var ctx2 = document.getElementById('myChart2')
-		var ctx3 = document.getElementById('myChart3')
-		var ctx4 = document.getElementById('myChart4')
 
 
 		var myChart1 = new Chart(ctx1, {
@@ -132,7 +144,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 			options: {
 				scales: {
 					yAxes: [{
-						type: 'linear', 
+						type: 'linear',
 						display: true,
 						position: 'left',
 						id: 'y-axis-1',
@@ -174,63 +186,8 @@ GrowerSystem.map = GrowerSystem.map || {};
 			}
 		});
 
-		var myChart3 = new Chart(ctx3, {
-			type: 'bar',
-			data: {
-				labels: [],
-				datasets: [{
-					label: 'Water',
-					borderColor: window.chartColors.blue,
-					backgroundColor: window.chartColors.blue,
-					fill: false,
-					data: [],
-					yAxisID: 'y-axis-1',
-				}]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						type: 'linear', 
-						display: true,
-						position: 'left',
-						id: 'y-axis-1',
-					}],
-				},
-				legend: {
-					display: true,
-					position: 'top'
-				}
-			}
-		});
 
-		var myChart4 = new Chart(ctx4, {
-			type: 'bar',
-			data: {
-				labels: [],
-				datasets: [{
-					label: 'Future Use',
-					borderColor: window.chartColors.blue,
-					backgroundColor: window.chartColors.blue,
-					fill: false,
-					data: [],
-					yAxisID: 'y-axis-1',
-				}]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						type: 'linear',
-						display: true,
-						position: 'left',
-						id: 'y-axis-1',
-					}],
-				},
-				legend: {
-					display: true,
-					position: 'top'
-				}
-			}
-		});
+		
 
 		AWS.config.credentials.get(function (err) {
 			if (err) {
@@ -244,10 +201,10 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24;
 		var toValue = new Date().valueOf()
-		if( samplingPeriod == 2){
+		if (samplingPeriod == 2) {
 			fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
 		}
-		if( samplingPeriod == 3){
+		if (samplingPeriod == 3) {
 			fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 30;
 		}
 
@@ -269,12 +226,11 @@ GrowerSystem.map = GrowerSystem.map || {};
 			if (err) {
 				console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
 			} else {
-				let tempValuesBomb = [];
 				data.Items.forEach(function (measure) {
 
-					let value1 = measure.ground_moisure;
-					let value2 = measure.air_moisure;
-					let value3 = measure.air_temperature;
+					let value1 = measure.Payload.ground_humidity;
+					let value2 = measure.Payload.air_humidity;
+					let value3 = measure.Payload.air_temperature;
 					let values = [value1, value2];
 					let values2 = [value3];
 
@@ -282,11 +238,8 @@ GrowerSystem.map = GrowerSystem.map || {};
 					addData(myChart1, time, 2, values);
 					addData(myChart2, time, 1, values2);
 
-					handleWaterChart(myChart3, measure.TimeEpoch, tempValuesBomb, measure.bomb);
 				});
-				tempValuesBomb.forEach( function (element) {
-					addData(myChart3, element.timeLastWatering, 1, element.amountOfWater);
-				});
+
 			}
 		});
 
@@ -294,8 +247,41 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 	}
 
+	function sendAction(action) {
+
+		AWS.config.credentials.get(function (err) {
+			if (err) {
+				alert(err);
+			}
+		});
+
+		AWS.config.region = 'sa-east-1';
+
+		var iotdata = new AWS.IotData({
+			accessKeyId: AWS.config.credentials.accessKeyId,
+			secretKey: AWS.config.credentials.secretAccessKey,
+			sessionToken: AWS.config.credentials.sessionToken,
+			region: AWS.config.region, 
+			endpoint: 'a3hk8xqcjduxe-ats.iot.sa-east-1.amazonaws.com'
+		  });
+
+		var params = {
+			topic: 'PepperActions', /* required */
+			payload: action,
+			qos: 0
+		};
+		//console.log(AWS.config.credentials.identityId);
+		iotdata.publish(params, function (err, data) {
+			if (err)
+				console.log(err, err.stack); // an error occurred
+			else
+				console.log(data);           // successful response
+		});
+
+	}
+
 	function addData(chart, time, cantData, data) {
-		
+
 		chart.data.labels.push(time);
 		for (var i = 0; i < cantData; i++) {
 			chart.data.datasets[i].data.push(data[i]);
@@ -310,8 +296,8 @@ GrowerSystem.map = GrowerSystem.map || {};
 		let timeLastWatering = "" + measure.charAt(0) + "" + measure.charAt(1) + ":" + measure.charAt(6) + "" + measure.charAt(7);
 		let amountOfWater = measure.charAt(15);
 		let dayOfLastWatering = measure.charAt(11);
-		if( !(dayOfLastWatering in tempValuesBomb)){
-			tempValuesBomb[dayOfLastWatering] = { timeLastWatering, amountOfWater};
+		if (!(dayOfLastWatering in tempValuesBomb)) {
+			tempValuesBomb[dayOfLastWatering] = { timeLastWatering, amountOfWater };
 		}
 	}
 
