@@ -11,28 +11,21 @@ GrowerSystem.map = GrowerSystem.map || {};
 		if (token) {
 			authToken = token;
 		} else {
-			window.location.href = './signin.html';
+			window.location.href = './login.html';
 		}
 	}).catch(function handleTokenError(error) {
 		alert(error);
-		window.location.href = './signin.html';
+		window.location.href = './login.html';
 	});
-
 
 	// 1 = 24hs; 2 = 1w; 3 = 1m
 	var samplingPeriod = 1;
 
-	// Register click handler for #request button
 	$(function onDocReady() {
-		//$('#request').click(handleRequestClick);
-		//$(GrowerSystem.map).on('pickupChange', handlePickupChanged);
-
 
 		GrowerSystem.authToken.then(function updateAuthMessage(token) {
 			if (token) {
-				//displayUpdate('You are authenticated. Click to see your <a href="#authTokenModal" data-toggle="modal">auth token</a>.');
 				$('.authToken').text(token);
-				//$('#toPopu').append("<tr><td>2</td><td>Thomas</td></tr>");
 
 				AWS.config.region = 'us-east-1';
 				AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -43,18 +36,29 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 				});
 
-
-				drawCharts();
-
+				console.log(parseJwt(token).email);
+				$("#idName").text(parseJwt(token).email);
 
 			} else {
-				logInButtonText = "Sign Out";
 			}
 		});
 
+		function parseJwt(token) {
+			var base64Url = token.split('.')[1];
+			var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+			var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+
+			return JSON.parse(jsonPayload);
+		};
+
+
+		$("#idImage").css("background-image", "url(https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg)");
+
 		$("#sign-out").click(function () {
 			GrowerSystem.signOut();
-			window.location.href = './signin.html';
+			window.location.href = './login.html';
 		});
 
 		$("#lightButtton").click(function () {
@@ -96,98 +100,70 @@ GrowerSystem.map = GrowerSystem.map || {};
 			drawCharts();
 		});
 
+		$(function () {
+			if (!$("#dashboard-humidity-chart").length)
+				return !1;
+			a();
+			var o = null
+				, t = "humidity";
+			function r(e) {
+				var o = "#dashboard-" + e + "-chart";
+				switch ($(o).has("svg").length && $(o).empty(),
+				e) {
+					case "humidity":
+						a();
+						break;
+					case "temperature":
+						let temperature = Morris.Line({
+							element: "dashboard-temperature-chart",
+							xkey: "x",
+							ykeys: ["y"],
+							//ymin: "auto 40",
+							labels: ["Temperature"],
+							xLabels: "hour",
+							hideHover: "auto",
+							yLabelFormat: function (e) {
+								return e === parseInt(e, 10) ? e : ""
+							},
+							resize: !0,
+							lineColors: [config.chart.colorSecondary.toString()],
+							pointFillColors: [config.chart.colorPrimary.toString()]
+						})
+						updateCharts(temperature, 2);
+
+				}
+			}
+			function a() {
+				let humidity = Morris.Line({
+					element: "dashboard-humidity-chart",
+					xkey: "x",
+					ykeys: ["y"],
+					//ymin: "auto 40",
+					labels: ["Humidity"],
+					xLabels: "hour",
+					hideHover: "auto",
+					yLabelFormat: function (e) {
+						return e === parseInt(e, 10) ? e : ""
+					},
+					resize: !0,
+					lineColors: [config.chart.colorSecondary.toString()],
+					pointFillColors: [config.chart.colorPrimary.toString()]
+				})
+				updateCharts(humidity, 1);
+			}
+			$('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+				o = e.target,
+					r(t = $(o).attr("href").replace("#", ""))
+			}),
+				$(document).on("themechange", function () {
+					r(t)
+				})
+		})
+
 	});
 
 
-
-
-	window.chartColors = {
-		red: 'rgb(255, 99, 132)',
-		orange: 'rgb(255, 159, 64)',
-		yellow: 'rgb(255, 205, 86)',
-		green: 'rgb(75, 192, 192)',
-		blue: 'rgb(54, 162, 235)',
-		purple: 'rgb(153, 102, 255)',
-		grey: 'rgb(201, 203, 207)'
-	};
-
-
-
-
-
-	function drawCharts() {
-
-		var ctx1 = document.getElementById('myChart1')
-		var ctx2 = document.getElementById('myChart2')
-
-
-		var myChart1 = new Chart(ctx1, {
-			type: 'line',
-			data: {
-				labels: [],
-				datasets: [{
-					label: 'Ground Moisure',
-					borderColor: window.chartColors.green,
-					backgroundColor: window.chartColors.green,
-					fill: false,
-					data: [],
-					yAxisID: 'y-axis-1',
-				}, {
-					label: 'Air Moisure',
-					borderColor: window.chartColors.red,
-					backgroundColor: window.chartColors.red,
-					fill: false,
-					data: [],
-					yAxisID: 'y-axis-1'
-				}]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						type: 'linear',
-						display: true,
-						position: 'left',
-						id: 'y-axis-1',
-					}],
-				},
-				legend: {
-					display: true,
-					position: 'top'
-				}
-			}
-		});
-
-		var myChart2 = new Chart(ctx2, {
-			type: 'line',
-			data: {
-				labels: [],
-				datasets: [{
-					label: 'Air Temperature',
-					borderColor: window.chartColors.grey,
-					backgroundColor: window.chartColors.grey,
-					fill: false,
-					data: [],
-					yAxisID: 'y-axis-1',
-				}]
-			},
-			options: {
-				scales: {
-					yAxes: [{
-						type: 'linear',
-						display: true,
-						position: 'left',
-						id: 'y-axis-1',
-					}],
-				},
-				legend: {
-					display: true,
-					position: 'top'
-				}
-			}
-		});
-
-
-		
+	function updateCharts(graph, type) {
 
 		AWS.config.credentials.get(function (err) {
 			if (err) {
@@ -195,18 +171,12 @@ GrowerSystem.map = GrowerSystem.map || {};
 			}
 		});
 
-
 		AWS.config.region = 'sa-east-1';
 		var docClient = new AWS.DynamoDB.DocumentClient();
 
-		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24;
-		var toValue = new Date().valueOf()
-		if (samplingPeriod == 2) {
-			fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
-		}
-		if (samplingPeriod == 3) {
-			fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 30;
-		}
+		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
+		var toValue = new Date().valueOf() - 1000 * 60 * 60 * 24;
+
 
 		let params2 = {
 			TableName: "Measurements",
@@ -222,29 +192,26 @@ GrowerSystem.map = GrowerSystem.map || {};
 			}
 		};
 
+
 		docClient.query(params2, function (err, data) {
 			if (err) {
 				console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
 			} else {
+				var humidities = [];
+				var temperatures = [];
 				data.Items.forEach(function (measure) {
 
-					let value1 = measure.Payload.ground_humidity;
-					let value2 = measure.Payload.air_humidity;
-					let value3 = measure.Payload.air_temperature;
-					let values = [value1, value2];
-					let values2 = [value3];
-
-					let time = (new Date(measure.TimeEpoch)).getHours() + ':' + (new Date(measure.TimeEpoch)).getMinutes();
-					addData(myChart1, time, 2, values);
-					addData(myChart2, time, 1, values2);
+					humidities.push({ x: measure.TimeEpoch, y: measure.Payload.ground_humidity });
+					temperatures.push({ x: measure.TimeEpoch, y: measure.Payload.air_temperature });
 
 				});
+				if (type == 1)
+					graph.setData(humidities);
+				if (type == 2)
+					graph.setData(temperatures);
 
 			}
 		});
-
-		feather.replace();
-
 	}
 
 	function sendAction(action) {
@@ -261,9 +228,9 @@ GrowerSystem.map = GrowerSystem.map || {};
 			accessKeyId: AWS.config.credentials.accessKeyId,
 			secretKey: AWS.config.credentials.secretAccessKey,
 			sessionToken: AWS.config.credentials.sessionToken,
-			region: AWS.config.region, 
+			region: AWS.config.region,
 			endpoint: 'a3hk8xqcjduxe-ats.iot.sa-east-1.amazonaws.com'
-		  });
+		});
 
 		var params = {
 			topic: 'PepperActions', /* required */

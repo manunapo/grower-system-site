@@ -3,7 +3,7 @@
 var GrowerSystem = window.GrowerSystem || {};
 
 (function scopeWrapper($) {
-    var signinUrl = './signin.html';
+    var signinUrl = './login.html';
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -137,7 +137,7 @@ var GrowerSystem = window.GrowerSystem || {};
         var textToSet = "You are not logged in. Please do it!";
         $('#emailField').show();
         $('#passField').show();
-        $('#rememberCheckBox').show();
+        //$('#rememberCheckBox').show();
         $('#signButton').show();
         //$('#sign-in-out').text("");
         if (cognitoUser) {
@@ -163,7 +163,7 @@ var GrowerSystem = window.GrowerSystem || {};
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
-                window.location.href = './dashboard.html';
+                window.location.href = './index.html';
             },
             function signinError(err) {
                 alert(err);
