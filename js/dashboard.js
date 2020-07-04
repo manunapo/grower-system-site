@@ -61,13 +61,23 @@ GrowerSystem.map = GrowerSystem.map || {};
 			window.location.href = './login.html';
 		});
 
-		$("#lightButtton").click(function () {
+		$("#lightButttonOn").click(function () {
 			let action = '{"light":"on"}';
 			sendAction(action);
 		});
 
-		$("#fanButtton").click(function () {
+		$("#fanButttonOn").click(function () {
 			let action = '{"fan":"on"}';
+			sendAction(action);
+		});
+
+		$("#lightButttonOff").click(function () {
+			let action = '{"light":"off"}';
+			sendAction(action);
+		});
+
+		$("#fanButttonOff").click(function () {
+			let action = '{"fan":"off"}';
 			sendAction(action);
 		});
 
