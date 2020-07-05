@@ -1,5 +1,6 @@
 /*global GrowerSystem _config*/
 
+
 var GrowerSystem = window.GrowerSystem || {};
 GrowerSystem.map = GrowerSystem.map || {};
 
@@ -36,9 +37,8 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 				});
 
-				console.log(parseJwt(token).email);
 				$("#idName").text(parseJwt(token).email);
-
+				updateActionList();
 			} else {
 			}
 		});
@@ -137,6 +137,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 							},
 							resize: !0,
 							lineColors: [config.chart.colorSecondary.toString()],
+							pointSize: 0,
 							pointFillColors: [config.chart.colorPrimary.toString()]
 						})
 						updateCharts(temperature, 2);
@@ -157,6 +158,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 					},
 					resize: !0,
 					lineColors: [config.chart.colorSecondary.toString()],
+					pointSize: 0,
 					pointFillColors: [config.chart.colorPrimary.toString()]
 				})
 				updateCharts(humidity, 1);
@@ -185,7 +187,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 		var docClient = new AWS.DynamoDB.DocumentClient();
 
 		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
-		var toValue = new Date().valueOf() - 1000 * 60 * 60	+ 1000 * 60 * 60 * 3;
+		var toValue = new Date().valueOf() - 1000 * 60 * 60 + 1000 * 60 * 60 * 3;
 
 		let params2 = {
 			TableName: "Measurements",
@@ -212,13 +214,67 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 					humidities.push({ x: measure.TimeEpoch, y: measure.Payload.ground_humidity });
 					temperatures.push({ x: measure.TimeEpoch, y: measure.Payload.air_temperature });
-					console.log("DATA");
 
 				});
+				let humMod = simplify(humidities, 5, false);
+				let temMod = simplify(temperatures, 1, false);
 				if (type == 1)
-					graph.setData(humidities);
+					graph.setData(humMod);
 				if (type == 2)
-					graph.setData(temperatures);
+					graph.setData(temMod);
+
+			}
+		});
+	}
+
+	function updateActionList() {
+
+		AWS.config.credentials.get(function (err) {
+			if (err) {
+				alert(err);
+			}
+		});
+
+		AWS.config.region = 'sa-east-1';
+		var docClient = new AWS.DynamoDB.DocumentClient();
+
+		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
+		var toValue = new Date().valueOf() - 1000 * 60 * 60 + 1000 * 60 * 60 * 3;
+
+		let params2 = {
+			TableName: "Actions",
+			KeyConditionExpression: "#ID = :ID and TimeEpoch between :time1 and :time2",
+			ScanIndexForward: false,
+			ExpressionAttributeNames: {
+				"#ID": "ID"
+			},
+			ExpressionAttributeValues: {
+				":ID": "data",
+				":time1": fromValue,
+				":time2": toValue
+			}
+		};
+
+
+		docClient.query(params2, function (err, data) {
+			if (err) {
+				console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+			} else {
+				let i = 1;
+				while (i <= data.Items.length && i <= 5) {
+					let action = data.Items[i - 1];
+
+					let name, value;
+					action.Payload.hasOwnProperty("light") ? name = "light" :
+						action.Payload.hasOwnProperty("fan") ? name = "fan" :
+							action.Payload.hasOwnProperty("bomb") ? name = "bomb" : "";
+
+					value = action.Payload[name];
+					$("#listActionName" + i).text("Modify " + name + " state");
+					$("#listActionState" + i).text("Turn " + value);
+					$("#listActionTime" + i).text(new Date(action.TimeEpoch).toLocaleString());
+					i++;
+				}
 
 			}
 		});

@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title> ModularAdmin - Free Dashboard Theme | HTML Version </title>
+    <title> Grower System </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
     <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/app.css">
     <!-- Theme initialization -->
     <script>
         var themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
@@ -106,8 +107,7 @@
                         <li class="profile dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                                 aria-haspopup="true" aria-expanded="false">
-                                <div class="img" id="idImage"
-                                    >
+                                <div class="img" id="idImage">
                                 </div>
                                 <span class="name" id="idName"></span>
                             </a>
@@ -136,7 +136,7 @@
                                 <span class="l l3"></span>
                                 <span class="l l4"></span>
                                 <span class="l l5"></span>
-                            </div> Modular Admin
+                            </div> Grower System
                         </div>
                     </div>
                     <nav class="menu">
@@ -147,152 +147,22 @@
                             </li>
                             <li>
                                 <a href="">
-                                    <i class="fa fa-th-large"></i> Items Manager <i class="fa arrow"></i>
+                                    <i class="fa fa-area-chart"></i> Monitor <i class="fa arrow"></i>
                                 </a>
                                 <ul class="sidebar-nav">
                                     <li>
-                                        <a href="items-list.html"> Items List </a>
+                                        <a href="water.html"> Water </a>
                                     </li>
                                     <li>
-                                        <a href="item-editor.html"> Item Editor </a>
+                                        <a href="humidity.html"> Humidity </a>
+                                    </li>
+                                    <li>
+                                        <a href="temperature.html"> Temperature </a>
+                                    </li>
+                                    <li>
+                                        <a href="light.html"> Light </a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-area-chart"></i> Charts <i class="fa arrow"></i>
-                                </a>
-                                <ul class="sidebar-nav">
-                                    <li>
-                                        <a href="charts-flot.html"> Flot Charts </a>
-                                    </li>
-                                    <li>
-                                        <a href="charts-morris.html"> Morris Charts </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-table"></i> Tables <i class="fa arrow"></i>
-                                </a>
-                                <ul class="sidebar-nav">
-                                    <li>
-                                        <a href="static-tables.html"> Static Tables </a>
-                                    </li>
-                                    <li>
-                                        <a href="responsive-tables.html"> Responsive Tables </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="forms.html">
-                                    <i class="fa fa-pencil-square-o"></i> Forms </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-desktop"></i> UI Elements <i class="fa arrow"></i>
-                                </a>
-                                <ul class="sidebar-nav">
-                                    <li>
-                                        <a href="buttons.html"> Buttons </a>
-                                    </li>
-                                    <li>
-                                        <a href="cards.html"> Cards </a>
-                                    </li>
-                                    <li>
-                                        <a href="typography.html"> Typography </a>
-                                    </li>
-                                    <li>
-                                        <a href="icons.html"> Icons </a>
-                                    </li>
-                                    <li>
-                                        <a href="grid.html"> Grid </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-file-text-o"></i> Pages <i class="fa arrow"></i>
-                                </a>
-                                <ul class="sidebar-nav">
-                                    <li>
-                                        <a href="login.html"> Login </a>
-                                    </li>
-                                    <li>
-                                        <a href="signup.html"> Sign Up </a>
-                                    </li>
-                                    <li>
-                                        <a href="reset.html"> Reset </a>
-                                    </li>
-                                    <li>
-                                        <a href="error-404.html"> Error 404 App </a>
-                                    </li>
-                                    <li>
-                                        <a href="error-404-alt.html"> Error 404 Global </a>
-                                    </li>
-                                    <li>
-                                        <a href="error-500.html"> Error 500 App </a>
-                                    </li>
-                                    <li>
-                                        <a href="error-500-alt.html"> Error 500 Global </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-sitemap"></i> Menu Levels <i class="fa arrow"></i>
-                                </a>
-                                <ul class="sidebar-nav">
-                                    <li>
-                                        <a href="#"> Second Level Item <i class="fa arrow"></i>
-                                        </a>
-                                        <ul class="sidebar-nav">
-                                            <li>
-                                                <a href="#"> Third Level Item </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"> Third Level Item </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#"> Second Level Item </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"> Second Level Item <i class="fa arrow"></i>
-                                        </a>
-                                        <ul class="sidebar-nav">
-                                            <li>
-                                                <a href="#"> Third Level Item </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"> Third Level Item </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"> Third Level Item <i class="fa arrow"></i>
-                                                </a>
-                                                <ul class="sidebar-nav">
-                                                    <li>
-                                                        <a href="#"> Fourth Level Item </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"> Fourth Level Item </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="screenful.html">
-                                    <i class="fa fa-bar-chart"></i> Agile Metrics <span class="label label-screenful">by
-                                        Screenful</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/modularcode/modular-admin-html">
-                                    <i class="fa fa-github-alt"></i> Theme Docs </a>
                             </li>
                         </ul>
                     </nav>
@@ -409,9 +279,7 @@
                                 <div class="card-block">
                                     <div class="title-block">
                                         <h4 class="title"> Stats </h4>
-                                        <p class="title-description"> Website metrics for <a
-                                                href="https://modularcode.io/modular-admin-html/"> your awesome project
-                                            </a>
+                                        <p class="title-description"> Website metrics for
                                         </p>
                                     </div>
                                     <div class="row row-sm stats-container">
@@ -558,17 +426,12 @@
                                             </div>
                                             <div class="item-col item-col-header item-col-sales">
                                                 <div>
-                                                    <span>Sales</span>
-                                                </div>
-                                            </div>
-                                            <div class="item-col item-col-header item-col-stats">
-                                                <div class="no-overflow">
-                                                    <span>Stats</span>
+                                                    <span>State</span>
                                                 </div>
                                             </div>
                                             <div class="item-col item-col-header item-col-date">
                                                 <div>
-                                                    <span>Published</span>
+                                                    <span>Time</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -576,199 +439,110 @@
                                     <li class="item">
                                         <div class="item-row">
                                             <div class="item-col fixed item-col-img xs">
-                                                <a href="">
-                                                    <div class="item-img xs rounded"
-                                                        style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)">
-                                                    </div>
-                                                </a>
+                                                <div class="item-img xs rounded"
+                                                    style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)">
+                                                </div>
                                             </div>
                                             <div class="item-col item-col-title no-overflow">
                                                 <div>
-                                                    <a href="" class="">
-                                                        <h4 class="item-title no-wrap"> 12 Myths Uncovered About IT
-                                                            &amp; Software </h4>
-                                                    </a>
+                                                    <h4 class="item-title no-wrap" id="listActionName1"></h4>
                                                 </div>
                                             </div>
                                             <div class="item-col item-col-sales">
-                                                <div class="item-heading">Sales</div>
-                                                <div> 4958 </div>
-                                            </div>
-                                            <div class="item-col item-col-stats">
-                                                <div class="item-heading">Stats</div>
-                                                <div class="no-overflow">
-                                                    <div class="item-stats sparkline" data-type="bar"></div>
-                                                </div>
+                                                <div class="item-heading">State</div>
+                                                <div id="listActionState1"></div>
                                             </div>
                                             <div class="item-col item-col-date">
-                                                <div class="item-heading">Published</div>
-                                                <div> 21 SEP 10:45 </div>
+                                                <div class="item-heading">Time</div>
+                                                <div id="listActionTime1"></div>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="item">
                                         <div class="item-row">
                                             <div class="item-col fixed item-col-img xs">
-                                                <a href="">
-                                                    <div class="item-img xs rounded"
-                                                        style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg)">
-                                                    </div>
-                                                </a>
+                                                <div class="item-img xs rounded"
+                                                    style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)">
+                                                </div>
                                             </div>
                                             <div class="item-col item-col-title no-overflow">
                                                 <div>
-                                                    <a href="" class="">
-                                                        <h4 class="item-title no-wrap"> 50% of things doesn&#x27;t
-                                                            really belongs to you </h4>
-                                                    </a>
+                                                    <h4 class="item-title no-wrap" id="listActionName2"></h4>
                                                 </div>
                                             </div>
                                             <div class="item-col item-col-sales">
-                                                <div class="item-heading">Sales</div>
-                                                <div> 192 </div>
-                                            </div>
-                                            <div class="item-col item-col-stats">
-                                                <div class="item-heading">Stats</div>
-                                                <div class="no-overflow">
-                                                    <div class="item-stats sparkline" data-type="bar"></div>
-                                                </div>
+                                                <div class="item-heading">State</div>
+                                                <div id="listActionState2"></div>
                                             </div>
                                             <div class="item-col item-col-date">
-                                                <div class="item-heading">Published</div>
-                                                <div> 21 SEP 10:45 </div>
+                                                <div class="item-heading">Time</div>
+                                                <div id="listActionTime2"></div>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="item">
                                         <div class="item-row">
                                             <div class="item-col fixed item-col-img xs">
-                                                <a href="">
-                                                    <div class="item-img xs rounded"
-                                                        style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg)">
-                                                    </div>
-                                                </a>
+                                                <div class="item-img xs rounded"
+                                                    style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)">
+                                                </div>
                                             </div>
                                             <div class="item-col item-col-title no-overflow">
                                                 <div>
-                                                    <a href="" class="">
-                                                        <h4 class="item-title no-wrap"> Vestibulum tincidunt amet
-                                                            laoreet mauris sit sem aliquam cras maecenas vel aliquam.
-                                                        </h4>
-                                                    </a>
+                                                    <h4 class="item-title no-wrap" id="listActionName3"></h4>
                                                 </div>
                                             </div>
                                             <div class="item-col item-col-sales">
-                                                <div class="item-heading">Sales</div>
-                                                <div> 2143 </div>
-                                            </div>
-                                            <div class="item-col item-col-stats">
-                                                <div class="item-heading">Stats</div>
-                                                <div class="no-overflow">
-                                                    <div class="item-stats sparkline" data-type="bar"></div>
-                                                </div>
+                                                <div class="item-heading">State</div>
+                                                <div id="listActionState3"></div>
                                             </div>
                                             <div class="item-col item-col-date">
-                                                <div class="item-heading">Published</div>
-                                                <div> 21 SEP 10:45 </div>
+                                                <div class="item-heading">Time</div>
+                                                <div id="listActionTime3"></div>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="item">
                                         <div class="item-row">
                                             <div class="item-col fixed item-col-img xs">
-                                                <a href="">
-                                                    <div class="item-img xs rounded"
-                                                        style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/why_this/128.jpg)">
-                                                    </div>
-                                                </a>
+                                                <div class="item-img xs rounded"
+                                                    style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)">
+                                                </div>
                                             </div>
                                             <div class="item-col item-col-title no-overflow">
                                                 <div>
-                                                    <a href="" class="">
-                                                        <h4 class="item-title no-wrap"> 10 tips of Object Oriented
-                                                            Design </h4>
-                                                    </a>
+                                                    <h4 class="item-title no-wrap" id="listActionName4"></h4>
                                                 </div>
                                             </div>
                                             <div class="item-col item-col-sales">
-                                                <div class="item-heading">Sales</div>
-                                                <div> 124 </div>
-                                            </div>
-                                            <div class="item-col item-col-stats">
-                                                <div class="item-heading">Stats</div>
-                                                <div class="no-overflow">
-                                                    <div class="item-stats sparkline" data-type="bar"></div>
-                                                </div>
+                                                <div class="item-heading">State</div>
+                                                <div id="listActionState4"></div>
                                             </div>
                                             <div class="item-col item-col-date">
-                                                <div class="item-heading">Published</div>
-                                                <div> 21 SEP 10:45 </div>
+                                                <div class="item-heading">Time</div>
+                                                <div id="listActionTime4"></div>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="item">
                                         <div class="item-row">
                                             <div class="item-col fixed item-col-img xs">
-                                                <a href="">
-                                                    <div class="item-img xs rounded"
-                                                        style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/w7download/128.jpg)">
-                                                    </div>
-                                                </a>
+                                                <div class="item-img xs rounded"
+                                                    style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg)">
+                                                </div>
                                             </div>
                                             <div class="item-col item-col-title no-overflow">
                                                 <div>
-                                                    <a href="" class="">
-                                                        <h4 class="item-title no-wrap"> Sometimes friend tells it is
-                                                            cold </h4>
-                                                    </a>
+                                                    <h4 class="item-title no-wrap" id="listActionName5"></h4>
                                                 </div>
                                             </div>
                                             <div class="item-col item-col-sales">
-                                                <div class="item-heading">Sales</div>
-                                                <div> 10214 </div>
-                                            </div>
-                                            <div class="item-col item-col-stats">
-                                                <div class="item-heading">Stats</div>
-                                                <div class="no-overflow">
-                                                    <div class="item-stats sparkline" data-type="bar"></div>
-                                                </div>
+                                                <div class="item-heading">State</div>
+                                                <div id="listActionState5"></div>
                                             </div>
                                             <div class="item-col item-col-date">
-                                                <div class="item-heading">Published</div>
-                                                <div> 21 SEP 10:45 </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="item-row">
-                                            <div class="item-col fixed item-col-img xs">
-                                                <a href="">
-                                                    <div class="item-img xs rounded"
-                                                        style="background-image: url(https://s3.amazonaws.com/uifaces/faces/twitter/pankogut/128.jpg)">
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="item-col item-col-title no-overflow">
-                                                <div>
-                                                    <a href="" class="">
-                                                        <h4 class="item-title no-wrap"> New ways of conceptual thinking
-                                                        </h4>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="item-col item-col-sales">
-                                                <div class="item-heading">Sales</div>
-                                                <div> 3217 </div>
-                                            </div>
-                                            <div class="item-col item-col-stats">
-                                                <div class="item-heading">Stats</div>
-                                                <div class="no-overflow">
-                                                    <div class="item-stats sparkline" data-type="bar"></div>
-                                                </div>
-                                            </div>
-                                            <div class="item-col item-col-date">
-                                                <div class="item-heading">Published</div>
-                                                <div> 21 SEP 10:45 </div>
+                                                <div class="item-heading">Time</div>
+                                                <div id="listActionTime5"></div>
                                             </div>
                                         </div>
                                     </li>
@@ -797,12 +571,12 @@
                                                             <div class="name"> Turn On/Off </div>
                                                         </div>
                                                         <div class="stat button">
-                                                            <button type="button"
-                                                                class="btn btn-oval btn-primary" id="lightButttonOn">ON!</button>
+                                                            <button type="button" class="btn btn-oval btn-primary"
+                                                                id="lightButttonOn">ON!</button>
                                                         </div>
                                                         <div class="stat button">
-                                                            <button type="button"
-                                                                class="btn btn-oval btn-primary" id="lightButttonOff">OFF!</button>
+                                                            <button type="button" class="btn btn-oval btn-primary"
+                                                                id="lightButttonOff">OFF!</button>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-sm-12 stat-col">
@@ -814,10 +588,12 @@
                                                             <div class="name"> Turn On/Off </div>
                                                         </div>
                                                         <div class="stat button">
-                                                            <button type="button" class="btn btn-oval btn-primary" id="fanButttonOn">ON!</button>
+                                                            <button type="button" class="btn btn-oval btn-primary"
+                                                                id="fanButttonOn">ON!</button>
                                                         </div>
                                                         <div class="stat button">
-                                                            <button type="button" class="btn btn-oval btn-primary" id="fanButttonOff">OFF!</button>
+                                                            <button type="button" class="btn btn-oval btn-primary"
+                                                                id="fanButttonOff">OFF!</button>
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-sm-12  stat-col">
@@ -829,8 +605,8 @@
                                                             <div class="name"> Water 5cc </div>
                                                         </div>
                                                         <div class="stat button">
-                                                            <button type="button"
-                                                                class="btn btn-oval btn-primary">GO!</button>
+                                                            <button type="button" class="btn btn-oval btn-primary"
+                                                                id="bombButtton">GO!</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -845,105 +621,29 @@
             </article>
             <footer class="footer">
                 <div class="footer-block buttons">
-                    <iframe class="footer-github-btn"
-                        src="https://ghbtns.com/github-btn.html?user=modularcode&repo=modular-admin-html&type=star&count=true"
-                        frameborder="0" scrolling="0" width="140px" height="20px"></iframe>
                 </div>
                 <div class="footer-block author">
-                    <ul>
-                        <li> created by <a href="https://github.com/modularcode">ModularCode</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/modularcode/modular-admin-html#get-in-touch">get in touch</a>
-                        </li>
-                    </ul>
+
                 </div>
             </footer>
-            <div class="modal fade" id="modal-media">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Media Library</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                <span class="sr-only">Close</span>
-                            </button>
-                        </div>
-                        <div class="modal-body modal-tab-container">
-                            <ul class="nav nav-tabs modal-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content modal-tab-content">
-                                <div class="tab-pane fade" id="gallery" role="tabpanel">
-                                    <div class="images-container">
-                                        <div class="row">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade active in" id="upload" role="tabpanel">
-                                    <div class="upload-container">
-                                        <div id="dropzone">
-                                            <form action="/" method="POST" enctype="multipart/form-data"
-                                                class="dropzone needsclick dz-clickable" id="demo-upload">
-                                                <div class="dz-message-block">
-                                                    <div class="dz-message needsclick"> Drop files here or click to
-                                                        upload. </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Insert Selected</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <div class="modal fade" id="confirm-modal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"><i class="fa fa-warning"></i> Alert</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure want to do this?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-        </div>
-    </div>
-    <!-- Reference block for JS -->
-    <div class="ref" id="ref">
-        <div class="color-primary"></div>
-        <div class="chart">
-            <div class="color-primary"></div>
-            <div class="color-secondary"></div>
-        </div>
-    </div>
-    <script src="js/vendor/vendor.js"></script>
-    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-    <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/cognito-auth.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.1.min.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/app.js"></script>
+
+            <!-- Reference block for JS -->
+            <div class="ref" id="ref">
+                <div class="color-primary"></div>
+                <div class="chart">
+                    <div class="color-primary"></div>
+                    <div class="color-secondary"></div>
+                </div>
+            </div>
+            <script src="js/vendor/vendor.js"></script>
+            <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+            <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+            <script src="js/config.js"></script>
+            <script src="js/cognito-auth.js"></script>
+            <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.1.min.js"></script>
+            <script src="js/vendor/simplify.js"></script>
+            <script src="js/dashboard.js"></script>
+            <script src="js/app.js"></script>
 </body>
 
 </html>
