@@ -133,7 +133,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 							xLabels: "hour",
 							hideHover: "auto",
 							yLabelFormat: function (e) {
-								return e === parseInt(e, 10) ? e : ""
+								return e;
 							},
 							resize: !0,
 							lineColors: [config.chart.colorSecondary.toString()],
@@ -185,8 +185,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 		var docClient = new AWS.DynamoDB.DocumentClient();
 
 		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
-		var toValue = new Date().valueOf() - 1000 * 60 * 60 * 24;
-
+		var toValue = new Date().valueOf() - 1000 * 60 * 60	+ 1000 * 60 * 60 * 3;
 
 		let params2 = {
 			TableName: "Measurements",
@@ -213,6 +212,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 
 					humidities.push({ x: measure.TimeEpoch, y: measure.Payload.ground_humidity });
 					temperatures.push({ x: measure.TimeEpoch, y: measure.Payload.air_temperature });
+					console.log("DATA");
 
 				});
 				if (type == 1)
