@@ -2934,3 +2934,11 @@ span a {
   @media (max-width: 767.98px) {
     .header .header-block-nav .profile-dropdown-menu {
       margin-top: 8px; } }
+
+
+
+.sampling{
+  float:right;
+  background-color: #2c353e;
+}
+

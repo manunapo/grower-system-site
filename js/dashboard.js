@@ -22,6 +22,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 	// 1 = 24hs; 2 = 1w; 3 = 1m
 	var samplingPeriod = 1;
 
+
 	$(function onDocReady() {
 
 		GrowerSystem.authToken.then(function updateAuthMessage(token) {
@@ -170,6 +171,8 @@ GrowerSystem.map = GrowerSystem.map || {};
 				$(document).on("themechange", function () {
 					r(t)
 				})
+
+
 		})
 
 	});
@@ -210,11 +213,12 @@ GrowerSystem.map = GrowerSystem.map || {};
 			} else {
 				var humidities = [];
 				var temperatures = [];
+				let lastMeasure;
 				data.Items.forEach(function (measure) {
 
 					humidities.push({ x: measure.TimeEpoch, y: measure.Payload.ground_humidity });
 					temperatures.push({ x: measure.TimeEpoch, y: measure.Payload.air_temperature });
-
+					lastMeasure = measure;
 				});
 				let humMod = simplify(humidities, 5, false);
 				let temMod = simplify(temperatures, 1, false);
@@ -222,7 +226,9 @@ GrowerSystem.map = GrowerSystem.map || {};
 					graph.setData(humMod);
 				if (type == 2)
 					graph.setData(temMod);
-
+				$("#lastAirHum").html(lastMeasure.Payload.air_humidity + " %");
+				$("#lastGndHum").html(lastMeasure.Payload.ground_humidity);
+				$("#lastAirTemp").html(lastMeasure.Payload.air_temperature + " C°");
 			}
 		});
 	}
@@ -238,7 +244,7 @@ GrowerSystem.map = GrowerSystem.map || {};
 		AWS.config.region = 'sa-east-1';
 		var docClient = new AWS.DynamoDB.DocumentClient();
 
-		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24 * 7;
+		var fromValue = new Date().valueOf() - 1000 * 60 * 60 * 24;
 		var toValue = new Date().valueOf() - 1000 * 60 * 60 + 1000 * 60 * 60 * 3;
 
 		let params2 = {
@@ -255,6 +261,8 @@ GrowerSystem.map = GrowerSystem.map || {};
 			}
 		};
 
+		var totalWater = 0;
+		var totalLight;
 
 		docClient.query(params2, function (err, data) {
 			if (err) {
@@ -273,11 +281,15 @@ GrowerSystem.map = GrowerSystem.map || {};
 					$("#listActionName" + i).text("Modify " + name + " state");
 					$("#listActionState" + i).text("Turn " + value);
 					$("#listActionTime" + i).text(new Date(action.TimeEpoch).toLocaleString());
+					if(name == "bomb"){
+						totalWater += 5;
+					}
 					i++;
 				}
-
+				$("#totalWater").html(totalWater + " cc");
 			}
 		});
+		
 	}
 
 	function sendAction(action) {
@@ -312,28 +324,6 @@ GrowerSystem.map = GrowerSystem.map || {};
 		});
 
 	}
-
-	function addData(chart, time, cantData, data) {
-
-		chart.data.labels.push(time);
-		for (var i = 0; i < cantData; i++) {
-			chart.data.datasets[i].data.push(data[i]);
-		}
-		chart.update();
-	}
-
-
-	function handleWaterChart(chart, epoch, tempValuesBomb, measure) {
-		// moisure.bomb = 14:34:05 d:0 a:5
-		let date = (new Date(epoch)).getDate();
-		let timeLastWatering = "" + measure.charAt(0) + "" + measure.charAt(1) + ":" + measure.charAt(6) + "" + measure.charAt(7);
-		let amountOfWater = measure.charAt(15);
-		let dayOfLastWatering = measure.charAt(11);
-		if (!(dayOfLastWatering in tempValuesBomb)) {
-			tempValuesBomb[dayOfLastWatering] = { timeLastWatering, amountOfWater };
-		}
-	}
-
 
 }(jQuery));
 
